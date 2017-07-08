@@ -1,0 +1,62 @@
+<div class="panel-body container col-lg-12">
+    <h4>Roster List</h4>
+	<div class="input-group col-lg-3 margin-5">
+	  <input type="text" class="form-control" placeholder="Roster" aria-describedby="basic-addon2" ng-model="searchField">
+	  <a class="btn input-group-addon" id="basic-addon2" ng-click="search()">Search</a>
+	</div>
+	<rd-widget>
+		<rd-widget-body classes="medium no-padding">
+			<td class="table-responsive">
+				<table class="table">
+					<thead>
+						<tr>
+							<th>Test
+								<span ng-if="sortField!='test' && sortField!='-test'" ng-click="sort('test')" class="fa fa-sort"></span>
+								<span ng-if="sortField=='test'" ng-click="sort('-test')" class="fa fa-caret-down"></span>
+								<span ng-if="sortField=='-test'" ng-click="sort('test')" class="fa fa-caret-up"></span>
+							</th>
+							<th>Schedule Start
+								<span ng-if="sortField!='schedule_start' && sortField!='-schedule_start'" ng-click="sort('schedule_start')" class="fa fa-sort"></span>
+								<span ng-if="sortField=='schedule_start'" ng-click="sort('-schedule_start')" class="fa fa-caret-down"></span>
+								<span ng-if="sortField=='-schedule_start'" ng-click="sort('schedule_start')" class="fa fa-caret-up"></span>
+							</th>
+							<th>Schedule End
+								<span ng-if="sortField!='schedule_end' && sortField!='-schedule_end'" ng-click="sort('schedule_end')" class="fa fa-sort"></span>
+								<span ng-if="sortField=='schedule_end'" ng-click="sort('-schedule_end')" class="fa fa-caret-down"></span>
+								<span ng-if="sortField=='-schedule_end'" ng-click="sort('schedule_end')" class="fa fa-caret-up"></span>
+							</th>
+							<th>Instrument Data ID
+								<span ng-if="sortField!='sensor_data_id' && sortField!='-sensor_data_id'" ng-click="sort('sensor_data_id')" class="fa fa-sort"></span>
+								<span ng-if="sortField=='sensor_data_id'" ng-click="sort('-sensor_data_id')" class="fa fa-caret-down"></span>
+								<span ng-if="sortField=='-sensor_data_id'" ng-click="sort('sensor_data_id')" class="fa fa-caret-up"></span>
+							</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody ng-repeat="roster in rosters">
+						<tr>
+							<td><a ng-click="view(roster.id)" class="table-link">{{ roster.test }}</a></td>
+							<td>{{ roster.schedule_start | date: 'medium' }}</td>
+							<td>{{ roster.schedule_end | date: 'medium' }}</td>
+							<td>{{ roster.sensor_data_id }}</td>
+							<td>
+								<a class="btn btn-xs btn-default" title="Edit" ng-click="edit(roster.id)">
+									<i class="fa fa-pencil"></i>
+								</a>
+								<a class="btn btn-xs btn1-default" title="Remove" ng-click="delete(roster.id)">
+									<i class="fa fa-trash"></i>
+								</a>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</rd-widget-body>
+	<rd-widget>
+</div>
+<div class="col-lg-12">
+	<a class="btn btn-primary" ng-click="addRoster()">Add</a>
+</div>
+
+
+

@@ -1,0 +1,176 @@
+<div class="col-xs-12">
+    <ul class="nav nav-tabs nav-justified">
+      <li role="presentation" ng-class="tab == 'details' ? 'active': ''">
+          <a ui-sref="graphics_new_details({id: test.id})">Test Details</a>
+      </li>
+      <li role="presentation" ng-class="tab == 'analysis' ? 'active': ''">
+          <a ui-sref="graphics_new_analysis({id: test.id})">Analysis</a>
+      </li>
+      <li role="presentation" ng-class="tab == 'recent' ? 'active': ''">
+          <a ui-sref="graphics_new_recent({id: test.id})">Last 24 hours</a>
+      </li>
+      <li role="presentation" ng-class="tab == 'data' ? 'active': ''">
+          <a ui-sref="graphics_new_data({id: test.id})">Data</a>
+      </li>
+    </ul>
+
+    <div style="margin-top: 10px;" ng-if="tab == 'details'">
+        <div class="panel-body col-xs-12" ng-if="results && results.length > 0">
+            <div class="row pull-right">
+                <a ng-click="downloadTsv(test.id)"><i class="fa fa-file-excel-o fa-3" aria-hidden="true"></i></a>
+                <a ng-click="downloadXls(test.id)"><i class="fa fa-file-excel-o fa-3" aria-hidden="true"></i></a>
+            </div>
+        </div>
+
+        <div class="col-xs-12">
+            <table class="table table-bordered">
+                <tbody>
+                    <tr><td>Source</td> <td>{{ test.field_unit_info.friendly_name }} {{ test.field_unit_info.company_info.city }}({{ test.field_unit_info.company_info.country }})</td></tr>
+                    <tr><td>Target</td> <td>{{ test.target_info.friendly_name }} {{ test.target_info.company_info.city }}({{ test.target_info.company_info.country }})</td></tr>
+                    <tr><td>Instrument</td> <td> {{ test.sensor_info.friendly_name }}</td></tr>
+                    <tr><td>Start date/time</td> <td> {{ test.parameters.start }}</td></tr>
+                    <tr><td>Stop date/time</td> <td> {{ test.parameters.stop }}</td></tr>
+                    <tr><td>Interval</td> <td> {{ test.parameters.interval }}ms</td></tr>
+                </tbody>
+            </table>
+
+
+            <div ng-if="test.parameters.recurring && results && results.length > 0">
+                <plotly plotly-data="data" plotly-layout="layout" plotly-options="options" plotly-events="plotlyEvents"></plotly>
+            </div>
+        </div>
+
+        <div class="col-xs-12" ng-if="!isEmpty() && !test.parameters.recurring">
+              <div class="panel panel-primary">
+                  <div class="panel-heading">
+                    <h3 class="panel-title"><i class="glyphicon glyphicon-ok"></i> Test Results: </h3>
+                  </div>
+                  <div class="panel-body">
+                      <ul ng-repeat = "(key, value) in results">
+                          <li>{{key}} : {{value}}</li>
+                      </ul>
+                  </div>
+              </div>
+        </div>
+
+        <div class="col-xs-12" ng-if="!results || results.length == 0">
+            <div class="alert alert-warning">Retrieving results, please wait</div>
+        </div>
+    </div>
+
+    <div class="row" style="margin-top: 10px;" ng-if="tab == 'analysis'">
+        <div class="col-xs-12">
+            <table class="table table-bordered">
+                <tbody>
+                    <tr><td>Source</td> <td>{{ test.field_unit_info.friendly_name }} {{ test.field_unit_info.company_info.city }}({{ test.field_unit_info.company_info.country }})</td></tr>
+                    <tr><td>Target</td> <td>{{ test.target_info.friendly_name }} {{ test.target_info.company_info.city }}({{ test.target_info.company_info.country }})</td></tr>
+                    <tr><td>Instrument</td> <td> {{ test.sensor_info.friendly_name }}</td></tr>
+                    <tr><td>Start date/time</td> <td> {{ test.parameters.start }}</td></tr>
+                    <tr><td>Stop date/time</td> <td> {{ test.parameters.stop }}</td></tr>
+                    <tr><td>Interval</td> <td> {{ test.parameters.interval }}ms</td></tr>
+                </tbody>
+            </table>
+
+            <div ng-if="test.parameters.recurring && results && results.length > 0">
+                <plotly plotly-data="data" plotly-layout="layout" plotly-options="options" plotly-events="plotlyEvents"></plotly>
+            </div>
+        </div>
+
+        <div class="col-xs-12" ng-if="!isEmpty() && !test.parameters.recurring">
+              <div class="panel panel-primary">
+                  <div class="panel-heading">
+                    <h3 class="panel-title"><i class="glyphicon glyphicon-ok"></i> Test Results: </h3>
+                  </div>
+                  <div class="panel-body">
+                      <ul ng-repeat = "(key, value) in results">
+                          <li>{{key}} : {{value}}</li>
+                      </ul>
+                  </div>
+              </div>
+        </div>
+
+        <div class="col-xs-12" ng-if="!results || results.length == 0">
+            <div class="alert alert-warning">Retrieving results, please wait</div>
+        </div>
+    </div>
+
+    <div class="row" style="margin-top: 10px;" ng-if="tab == 'recent'">
+        <div class="col-xs-12">
+            <table class="table table-bordered">
+                <tbody>
+                    <tr><td>Source</td> <td>{{ test.field_unit_info.friendly_name }} {{ test.field_unit_info.company_info.city }}({{ test.field_unit_info.company_info.country }})</td></tr>
+                    <tr><td>Target</td> <td>{{ test.target_info.friendly_name }} {{ test.target_info.company_info.city }}({{ test.target_info.company_info.country }})</td></tr>
+                    <tr><td>Instrument</td> <td> {{ test.sensor_info.friendly_name }}</td></tr>
+                    <tr><td>Start date/time</td> <td> {{ test.parameters.start }}</td></tr>
+                    <tr><td>Stop date/time</td> <td> {{ test.parameters.stop }}</td></tr>
+                    <tr><td>Interval</td> <td> {{ test.parameters.interval }}ms</td></tr>
+                </tbody>
+            </table>
+
+            <div ng-if="test.parameters.recurring && results && results.length > 0">
+                <plotly plotly-data="data" plotly-layout="layout" plotly-options="options" plotly-events="plotlyEvents"></plotly>
+            </div>
+        </div>
+
+        <div class="col-xs-12" ng-if="!isEmpty() && !test.parameters.recurring">
+              <div class="panel panel-primary">
+                  <div class="panel-heading">
+                    <h3 class="panel-title"><i class="glyphicon glyphicon-ok"></i> Test Results: </h3>
+                  </div>
+                  <div class="panel-body">
+                      <ul ng-repeat = "(key, value) in results">
+                          <li>{{key}} : {{value}}</li>
+                      </ul>
+                  </div>
+              </div>
+        </div>
+
+        <div class="col-xs-12" ng-if="!results || results.length == 0">
+            <div class="alert alert-warning">Retrieving results, please wait</div>
+        </div>
+    </div>
+
+    <div class="row" style="margin-top: 10px;" ng-if="tab == 'data'">
+        <div class="row">
+            <div class="col-xs-9">
+                <table class="table table-bordered">
+                    <tbody>
+                        <tr><td>Source</td> <td>{{ test.field_unit_info.friendly_name }} {{ test.field_unit_info.company_info.city }}({{ test.field_unit_info.company_info.country }})</td></tr>
+                        <tr><td>Target</td> <td>{{ test.target_info.friendly_name }} {{ test.target_info.company_info.city }}({{ test.target_info.company_info.country }})</td></tr>
+                        <tr><td>Instrument</td> <td> {{ test.sensor_info.friendly_name }}</td></tr>
+                        <tr><td>Start date/time</td> <td> {{ test.parameters.start }}</td></tr>
+                        <tr><td>Stop date/time</td> <td> {{ test.parameters.stop }}</td></tr>
+                        <tr><td>Interval</td> <td> {{ test.parameters.interval }}ms</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="col-xs-3">
+                <just-gage id="testGage" min=0 max=100 value=42 title="Health"></just-gage>
+            </div>
+        </div>
+
+        <div class="row">
+            <div ng-if="test.parameters.recurring && results && results.length > 0">
+                <plotly plotly-data="data" plotly-layout="layout" plotly-options="options" plotly-events="plotlyEvents"></plotly>
+            </div>
+        </div>
+
+        <div class="col-xs-12" ng-if="!isEmpty() && !test.parameters.recurring">
+              <div class="panel panel-primary">
+                  <div class="panel-heading">
+                    <h3 class="panel-title"><i class="glyphicon glyphicon-ok"></i> Test Results: </h3>
+                  </div>
+                  <div class="panel-body">
+                      <ul ng-repeat = "(key, value) in results">
+                          <li>{{key}} : {{value}}</li>
+                      </ul>
+                  </div>
+              </div>
+        </div>
+
+        <div class="col-xs-12" ng-if="!results || results.length == 0">
+            <div class="alert alert-warning">Retrieving results, please wait</div>
+        </div>
+    </div>
+</div>

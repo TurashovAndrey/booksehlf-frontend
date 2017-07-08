@@ -1,0 +1,351 @@
+<div class="panel-body container margin-5">
+	<div class="row">
+		<section>
+        <div class="wizard">
+            <div class="wizard-inner">
+                <div class="connecting-line"></div>
+                <ul class="nav nav-tabs" role="tablist">
+
+                    <li role="presentation" ng-class="step == 1 ? 'active': 'disabled'">
+                        <a href="#step1" data-toggle="tab" aria-controls="step1" role="tab" title="Step 1">
+                            <span class="round-tab">
+                                <i class="glyphicon glyphicon-hdd"></i>
+                            </span>
+                        </a>
+                    </li>
+
+                    <li role="presentation" ng-class="step == 2 ? 'active': 'disabled'">
+                        <a href="#step3" data-toggle="tab" aria-controls="step3" role="tab" title="Step 3">
+                            <span class="round-tab">
+                                <i class="fa fa-stethoscope"></i>
+                            </span>
+                        </a>
+                    </li>
+
+                    <li role="presentation" ng-class="step == 3 ? 'active': 'disabled'">
+                        <a href="#step2" data-toggle="tab" aria-controls="step2" role="tab" title="Step 2">
+                            <span class="round-tab">
+                                <i class="fa fa-bullseye"></i>
+                            </span>
+                        </a>
+                    </li>
+
+                    <li role="presentation" ng-class="step == 4 ? 'active': 'disabled'">
+                        <a href="#complete" data-toggle="tab" aria-controls="complete" role="tab" title="Complete">
+                            <span class="round-tab">
+                                <i class="fa fa-pencil"></i>
+                            </span>
+                        </a>
+                    </li>
+
+                    <li role="presentation" ng-class="step == 5 ? 'active': 'disabled'">
+                        <a href="#complete" data-toggle="tab" aria-controls="complete" role="tab" title="Complete">
+                            <span class="round-tab">
+                                <i class="glyphicon glyphicon-ok"></i>
+                            </span>
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+
+            <form role="form">
+                <div class="tab-content">
+                    <div ng-class="step == 1 ? 'tab-pane active': 'tab-pane disabled'" role="tabpanel" id="step1">
+                        <h3>Step 1</h3>
+                        <p>Please select one or more Field Units to set up a recurring network measurement:</p>
+                    </div>
+                    <div ng-class="step == 2 ? 'tab-pane active': 'tab-pane disabled'" role="tabpanel" id="step2">
+                        <h3>Step 2</h3>
+                        <p>Please select the instrument you want to run on the Field Units you selected at Step 1:</p>
+                    </div>
+                    <div ng-class="step == 3? 'tab-pane active': 'tab-pane disabled'" role="tabpanel" id="step3">
+                        <h3>Step 3</h3>
+                        <p>Please select the target information system you want measure against:</p>
+                    </div>
+                    <div ng-class="step == 4 ? 'tab-pane active': 'tab-pane disabled'" role="tabpanel" id="complete">
+                        <h3>Step 4</h3>
+                        <p>Please verify the instrument parameters for this recurring measurement:</p>
+                    </div>
+                    <div ng-class="step == 5 ? 'tab-pane active': 'tab-pane disabled'" role="tabpanel" id="complete">
+                        <h3>Complete</h3>
+                        <p>Please verify the settings for this recurring measurement and confirm by pressing "submit":</p>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </form>
+        </div>
+    </section>
+   </div>
+</div>
+
+<div class="panel-body col-lg-12" ng-show="step == 1">
+    <div class="input-group margin-5">
+        <div class="container">
+            <div class="pull-left">
+                <div class="btn-group btn-group-merge">
+                    <label>
+                        Tenant
+                    </label>
+                    <select ng-model="tenant" class="form-control" placeholder="Choose tenant" ng-disabled="view_mode"
+                            ng-options="tenant.id as tenant.name for tenant in tenants" ng-change="changeTenant(tenant)">
+                    </select>
+                </div>
+                <div class="btn-group btn-group-merge">
+                    <label>
+                        Company
+                    </label>
+                    <select ng-model="company" class="form-control" placeholder="Choose company" ng-disabled="view_mode"
+                            ng-options="company.id as company.name for company in companies" ng-change="changeCompany(company)">
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <rd-widget>
+            <rd-widget-body classes="medium no-padding">
+
+                <td class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th><input type="checkbox" ng-click="checkAllFieldUnits()"></th>
+                                <th>Host Name
+                                    <span ng-if="sortField!='host_name' && sortField!='-host_name'" ng-click="sort('host_name')" class="fa fa-sort"></span>
+                                    <span ng-if="sortField=='host_name'" ng-click="sort('-host_name')" class="fa fa-caret-down"></span>
+                                    <span ng-if="sortField=='-host_name'" ng-click="sort('host_name')" class="fa fa-caret-up"></span>
+                                </th>
+                                <th>Friendly Name
+                                    <span ng-if="sortField!='friendly_name' && sortField!='-friendly_name'" ng-click="sort('friendly_name')" class="fa fa-sort"></span>
+                                    <span ng-if="sortField=='friendly_name'" ng-click="sort('-friendly_name')" class="fa fa-caret-down"></span>
+                                    <span ng-if="sortField=='-friendly_name'" ng-click="sort('friendly_name')" class="fa fa-caret-up"></span>
+                                </th>
+                                <th>UUID
+                                    <span ng-if="sortField!='UUID' && sortField!='-UUID'" ng-click="sort('UUID')" class="fa fa-sort"></span>
+                                    <span ng-if="sortField=='UUID'" ng-click="sort('-UUID')" class="fa fa-caret-down"></span>
+                                    <span ng-if="sortField=='-UUID'" ng-click="sort('UUID')" class="fa fa-caret-up"></span>
+                                </th>
+                                <th>IP Address
+                                    <span ng-if="sortField!='GlobalIPV4' && sortField!='-GlobalIPV4'" ng-click="sort('GlobalIPV4')" class="fa fa-sort"></span>
+                                    <span ng-if="sortField=='GlobalIPV4'" ng-click="sort('-GlobalIPV4')" class="fa fa-caret-down"></span>
+                                    <span ng-if="sortField=='-GlobalIPV4'" ng-click="sort('GlobalIPV4')" class="fa fa-caret-up"></span>
+                                </th>
+                                <th>Date Installed
+                                    <span ng-if="sortField!='date_installed' && sortField!='-date_installed'" ng-click="sort('date_installed')" class="fa fa-sort"></span>
+                                    <span ng-if="sortField=='date_installed'" ng-click="sort('-date_installed')" class="fa fa-caret-down"></span>
+                                    <span ng-if="sortField=='-date_installed'" ng-click="sort('date_installed')" class="fa fa-caret-up"></span>
+                                </th>
+                                <th>MAC Address
+                                    <span ng-if="sortField!='MAC_address' && sortField!='-MAC_address'" ng-click="sort('MAC_address')" class="fa fa-sort"></span>
+                                    <span ng-if="sortField=='MAC_address'" ng-click="sort('-MAC_address')" class="fa fa-caret-down"></span>
+                                    <span ng-if="sortField=='-MAC_address'" ng-click="sort('MAC_address')" class="fa fa-caret-up"></span>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody ng-repeat="fieldUnit in fieldUnits">
+                            <tr>
+                                <td><input type="checkbox" ng-model="fieldUnit.checked"></td>
+                                <td>{{ fieldUnit.hostname }}</td>
+                                <td>{{ fieldUnit.friendly_name }}</td>
+                                <td>{{ fieldUnit.UUID }}</td>
+                                <td>{{ fieldUnit.GlobalIPV4 }}</td>
+                                <td>{{ fieldUnit.date_installed | date: 'medium' }}</td>
+                                <td>{{ fieldUnit.MAC_address }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </rd-widget-body>
+        </rd-widget>
+    </div>
+</div>
+
+<div class="panel-body container col-lg-12" ng-show="step == 2">
+	<rd-widget>
+		<rd-widget-body classes="medium no-padding">
+			<div class="table-responsive">
+				<table class="table">
+					<thead>
+						<tr>
+                            <th></th>
+							<th>Name</th>
+                            <th>Description</th>
+						</tr>
+					</thead>
+					<tbody ng-repeat="sensor in sensors">
+						<tr>
+                            <td><input type="radio" ng-click="checkSensor(sensor)" ng-value=true ng-model="sensor.checked"></td>
+							<td><a ng-click="view(sensor.id)" class="table-link">{{ sensor.friendly_name }}</a></td>
+						    <td>{{ sensor.description | limitTo : 100 }}</td>
+                        </tr>
+					</tbody>
+				</table>
+			</div>
+		</rd-widget-body>
+	<rd-widget>
+</div>
+
+<div class="panel-body container col-lg-12" ng-show="step == 3">
+    <rd-widget>
+		<rd-widget-body classes="medium no-padding">
+			<td class="table-responsive">
+				<table class="table">
+                            <th></th>
+							<th>Friendly Name
+								<span ng-if="sortField!='friendly_name' && sortField!='-friendly_name'" ng-click="sort('friendly_name')" class="fa fa-sort"></span>
+								<span ng-if="sortField=='friendly_name'" ng-click="sort('-friendly_name')" class="fa fa-caret-down"></span>
+								<span ng-if="sortField=='-friendly_name'" ng-click="sort('friendly_name')" class="fa fa-caret-up"></span>
+							</th>
+							<th>IP Address
+								<span ng-if="sortField!='IPv4' && sortField!='-IPv4'" ng-click="sort('IPv4')" class="fa fa-sort"></span>
+								<span ng-if="sortField=='IPv4'" ng-click="sort('-IPv4')" class="fa fa-caret-down"></span>
+								<span ng-if="sortField=='-IPv4'" ng-click="sort('IPv4')" class="fa fa-caret-up"></span>
+							</th>
+							<th>Site
+								<span ng-if="sortField!='site' && sortField!='-site'" ng-click="sort('site')" class="fa fa-sort"></span>
+								<span ng-if="sortField=='site'" ng-click="sort('-site')" class="fa fa-caret-down"></span>
+								<span ng-if="sortField=='-site'" ng-click="sort('site')" class="fa fa-caret-up"></span>
+							</th>
+						</tr>
+					<tbody ng-repeat="target in targets">
+						<tr>
+                            <td><input type="radio" ng-click="checkTarget(target)" ng-value=true ng-model="target.checked"></td>
+							<td><a ng-click="view(target.id)" class="table-link">{{ target.friendly_name }}</a></td>
+							<td>{{ target.IPv4 }}</td>
+							<td>{{ target.site_info.city }} {{ target.site_info.country }}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</rd-widget-body>
+	<rd-widget>
+</div>
+
+<div class="panel-body container col-lg-12" ng-show="step == 4">
+	<rd-widget>
+		<rd-widget-body classes="medium no-padding">
+			<td class="table-responsive">
+				<table class="table">
+							<th>Parameter
+								<span ng-if="sortField!='name' && sortField!='-name'" ng-click="sort('name')" class="fa fa-sort"></span>
+								<span ng-if="sortField=='name'" ng-click="sort('-name')" class="fa fa-caret-down"></span>
+								<span ng-if="sortField=='-name'" ng-click="sort('name')" class="fa fa-caret-up"></span>
+							</th>
+							<th>Value
+								<span ng-if="sortField!='value' && sortField!='-value'" ng-click="sort('value')" class="fa fa-sort"></span>
+								<span ng-if="sortField=='value'" ng-click="sort('-value')" class="fa fa-caret-down"></span>
+								<span ng-if="sortField=='-value'" ng-click="sort('value')" class="fa fa-caret-up"></span>
+							</th>
+                            <th></th>
+						</tr>
+					</thead>
+					<tbody ng-repeat="(name, value) in custom_parameters track by $index">
+						<tr>
+							<td>{{ name }}</td>
+							<td>{{ value }}</td>
+                            <td>
+								<a class="btn btn-xs btn-default" title="Remove" ng-click="deleteParameter(name)">
+									<i class="fa fa-trash"></i>
+								</a>
+                            </td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</rd-widget-body>
+    <rd-widget>
+    <div class="margin-5 col-lg-7" ng-show="step == 4" ng-if="recurring">
+        <div class="col-lg-2">
+            <div class="input-group">
+                <input datetime-picker date-format="yyyy-MM-dd HH:mm:ss" class="form-control" id="schedule-start" placeholder="Start" ng-model="schedule_start">
+            </div>
+        </div>
+        <div class="col-lg-2">
+            <div class="input-group">
+                <input datetime-picker date-format="yyyy-MM-dd HH:mm:ss" class="form-control"  id="schedule-end" placeholder="Stop" ng-model="schedule_end">
+            </div>
+        </div>
+        <div class="col-lg-2">
+            <input class="form-control" id="interval" placeholder="Interval (sec)" ng-model="interval">
+        </div>
+        <div class="col-lg-1">
+            <a class="btn btn-primary" ng-click="setSchedule(schedule_start, schedule_end, interval)">Set</a>
+        </div>
+    </div>
+
+    <div class="margin-5 col-lg-7" ng-show="step == 4">
+        <div class="col-lg-3">
+            <input class="form-control" id="name-input" placeholder="Enter name" ng-model="parameter_name">
+        </div>
+        <div class="col-lg-3">
+            <input class="form-control" id="department-input" placeholder="Enter value" ng-model="parameter_value">
+        </div>
+        <div class="col-lg-1">
+            <a class="btn btn-primary" ng-show="step == 4" ng-click="addParameter(parameter_name, parameter_value)" ng-disabled="!parameter_name|| !parameter_value">Add</a>
+        </div>
+    </div>
+</div>
+
+<div class="panel-body container col-lg-12" ng-show="step == 5">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h3 class="panel-title"><i class="glyphicon glyphicon-hdd"></i> Field Units: </h3>
+        </div>
+        <div class="panel-body">
+            <ul ng-repeat="fieldUnit in fieldUnits">
+                <li ng-if="fieldUnit.checked">{{ fieldUnit.hostname }} {{ fieldUnit.friendly_name }}</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h3 class="panel-title"><i class="fa fa-bullseye"></i> Target: </h3>
+        </div>
+        <div class="panel-body">
+            <ul ng-repeat="target in targets">
+                <li ng-if="target.checked">{{ target.friendly_name }} </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h3 class="panel-title"><i class="fa fa-stethoscope"></i> Instrument: </h3>
+        </div>
+        <div class="panel-body">
+            <ul ng-repeat="sensor in sensors">
+                <li ng-if="sensor.checked">{{ sensor.friendly_name }} </li>
+            </ul>
+            <h4 ng-if="custom_parameters.length > 0">Parameters:</h4>
+            <ul ng-repeat="(name, value) in custom_parameters">
+                <li>{{ name }} : {{ value }}</li>
+            </ul>
+        </div>
+    </div>
+
+    <div ng-repeat="result in results">
+        <div ng-show="result">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                  <h3 class="panel-title"><i class="glyphicon glyphicon-ok"></i> Result: </h3>
+                </div>
+                <div class="panel-body">
+                    <ul ng-repeat="(name, value) in result">
+                        <li>{{ name }} : {{ value }}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-lg-12" >
+	<a class="btn btn-primary" ng-click="previousStep()" ng-show="step > 1">Back</a>
+	<a class="btn btn-primary" ng-click="nextStep()" ng-show="step < 5">Next</a>
+    <a class="btn btn-primary" ng-click="submit()" ng-show="step == 5 && results.length == 0">Submit</a>
+</div>
+

@@ -1,0 +1,130 @@
+<div ng-controller="MasterCtrl">
+  <div id="page-wrapper" ng-class="{'open': toggle}" ng-cloak>
+
+    <!-- Sidebar -->
+    <div id="sidebar-wrapper">
+      <ul class="sidebar">
+        <li class="sidebar-main">
+          <a ng-click="toggleSidebar()">
+            <img src="img/tincworks.png" width="40px" height="40px">
+            Dashboard
+            <span class="menu-icon glyphicon glyphicon-transfer"></span>
+          </a>
+        </li>
+        <li class="sidebar-list-custom" ng-click="showChildNodes()"><a href="#">Administration <span class="menu-icon fa fa-sitemap"></span></span></a></li>
+        <li class="sidebar-list" ng-show="showChild">
+          <a ui-sref="tenants" ui-sref-active="active" style="font-size: 12px" class="subitem">Tenants <span class="menu-icon fa fa-institution"></span></a>
+        </li>
+        <li class="sidebar-list" ng-show="showChild">
+          <a ui-sref="companies" ui-sref-active="active" style="font-size: 12px" class="subitem">Companies <span class="menu-icon fa fa-users"></span></a>
+        </li>
+        <li class="sidebar-list" ng-show="showChild">
+          <a ui-sref="sites" ui-sref-active="active" style="font-size: 12px" class="subitem">Sites <span class="menu-icon fa fa-map-marker"></span></a>
+        </li>
+        <li class="sidebar-list" ng-show="showChild">
+          <a ui-sref="field_units" style="font-size: 12px" class="subitem" ui-sref-active="active">Field Units <span class="menu-icon glyphicon glyphicon-hdd"></span></a>
+        </li>
+        <li class="sidebar-list" ng-show="showChild">
+          <a ui-sref="contacts" style="font-size: 12px" class="subitem" ui-sref-active="active">Contacts <span class="menu-icon fa fa-user"></span></a>
+        </li>
+        <li class="sidebar-list" ng-show="showChild">
+          <a ui-sref="sensors" style="font-size: 12px" class="subitem" ui-sref-active="active">Instruments <span class="menu-icon fa fa-stethoscope"></span></a>
+        </li>
+        <li class="sidebar-list" ng-show="showChild">
+          <a ui-sref="targets" style="font-size: 12px" class="subitem" ui-sref-active="active">Targets <span class="menu-icon fa fa-bullseye"></span></a>
+        </li>
+
+        <li class="sidebar-list-custom">
+            <a href="#" ng-click="showChildNodesMeasure()">Measure <span class="menu-icon fa fa-tachometer"></span></a>
+            <li class="sidebar-list" ng-show="showChildMeasure">
+              <a ui-sref="tests_recurring" style="font-size: 12px" class="subitem" ui-sref-active="active">Tests <span class="menu-icon fa fa-list-ul"></span></a>
+            </li>
+            <li class="sidebar-list" ng-show="showChildMeasure">
+              <a ui-sref="wizard_recurring" style="font-size: 12px" class="subitem" ui-sref-active="active">Add Test <span class="menu-icon fa fa-magic"></span></a>
+            </li>
+        </li>
+        <li class="sidebar-list-custom">
+          <a href="#" ng-click="showChildNodesAnalyze()">Analyze <span class="menu-icon fa fa-bar-chart"></span></a>
+          <li class="sidebar-list" ng-show="showChildAnalyze">
+            <a ui-sref="graphics" style="font-size: 12px" class="subitem" ui-sref-active="active">Visualize <span class="menu-icon fa fa-line-chart"></span></a>
+          </li>
+          <li class="sidebar-list" ng-show="showChildAnalyze">
+            <a style="font-size: 12px" class="subitem" ui-sref-active="active">Alerts <span class="menu-icon fa fa-exclamation-triangle"></span></a>
+          </li>
+          <li class="sidebar-list" ng-show="showChildAnalyze">
+            <a style="font-size: 12px" class="subitem" ui-sref-active="active">Reports <span class="menu-icon fa fa-file-text"></span></a>
+          </li>
+          <li class="sidebar-list" ng-show="showChildAnalyze">
+            <a style="font-size: 12px" class="subitem" ui-sref-active="active">Dashboards <span class="menu-icon fa fa-pie-chart"></span></a>
+          </li>
+        </li>
+        <li class="sidebar-list-custom">
+          <a href="#" ng-click="showChildNodesDiagnose()">Diagnose <span class="menu-icon fa fa-user-md"></span></a>
+          <li class="sidebar-list" ng-show="showChildDiagnose">
+              <a style="font-size: 12px" class="subitem" ui-sref="tests_onetime" ui-sref-active="active">Diagnostic Tests <span class="menu-icon fa fa-list-ul"></span></a>
+          </li>
+          <li class="sidebar-list" ng-show="showChildDiagnose">
+              <a ui-sref="wizard_onetime" style="font-size: 12px" class="subitem" ui-sref-active="active">Add Test <span class="menu-icon fa fa-magic"></span></a>
+          </li>
+        </li>
+        <li class="sidebar-list-custom">
+          <a href="#" ng-click="showChildNodesLoadTest()">Load Test <span class="menu-icon fa fa-heartbeat"></span></a>
+          <li class="sidebar-list" ng-show="showChildLoadTest">
+              <a style="font-size: 12px" class="subitem" ui-sref="tests_load" ui-sref-active="active">Load Tests <span class="menu-icon fa fa-list-ul"></span></a>
+          </li>
+          <li class="sidebar-list" ng-show="showChildLoadTest">
+              <a style="font-size: 12px" class="subitem" ui-sref="tests_load" ui-sref-active="active">Add Test <span class="menu-icon fa fa-magic"></span></a>
+          </li>
+        </li>
+      </ul>
+    </div>
+    <!-- End Sidebar -->
+
+    <div id="content-wrapper" >
+      <div class="page-content">
+
+        <!-- Header Bar -->
+        <div class="row header">
+          <div class="col-xs-12">
+            <div class="user pull-right">
+              <div class="item dropdown" uib-dropdown>
+                <a href="#" class="dropdown-toggle" uib-dropdown-toggle>
+                  <img src="img/avatar.jpg" class="img-circle-80" ng-if="!userSettings.avatar">
+                  <img ng-src="{{userSettings.avatar}}" class="img-circle-80" ng-if="userSettings.avatar">
+                </a>
+                <ul class="dropdown-menu dropdown-menu-right">
+                  <li class="dropdown-header">
+                    {{ user.first_name }} {{ user.last_name }}
+                  </li>
+                  <li class="divider"></li>
+                  <li class="link">
+                    <a ui-sref="account">Account</a>
+                  </li>
+                  <li class="divider"></li>
+                  <li class="link">
+                    <a href="#" ng-click="logout()">
+                      Logout
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="meta">
+              <div class="page">
+                Dashboard
+              </div>
+              <div class="breadcrumb-links">
+                Home / Dashboard
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- End Header Bar -->
+
+        <!-- Main Content -->
+        <div ui-view></div>
+
+      </div><!-- End Page Content -->
+    </div><!-- End Content Wrapper -->
+  </div><!-- End Page Wrapper -->
+</div>

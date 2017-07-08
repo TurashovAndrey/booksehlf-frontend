@@ -1,0 +1,39 @@
+<div class="panel-body col-lg-12" ng-if="results && results.length > 0">
+    <div class="row pull-right">
+        <a ng-click="download(test.id)"><i class="fa fa-file-excel-o fa-3" aria-hidden="true"></i></a>
+    </div>
+</div>
+
+<div class="col-xs-12" ng-if="test.parameters.recurring && results && results.length > 0">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h3 class="panel-title"><i class="glyphicon glyphicon-ok"></i></h3>
+        </div>
+        <div class="panel-body">
+            <ul>
+                <li>Field Unit: {{ test.field_unit_info.friendly_name }} Target: {{ test.target_info.friendly_name }}</li>
+                <li>Instrument: {{ test.sensor_info.friendly_name }}</li>
+                <li>Start: {{ test.parameters.start }} Interval: {{ test.parameters.interval }}ms Stop: {{ test.parameters.stop }}</li>
+            </ul>
+        </div>
+    </div>
+
+    <plotly plotly-data="data" plotly-layout="layout" plotly-options="options" plotly-events="plotlyEvents"></plotly>
+</div>
+
+<div class="col-xs-12" ng-if="!isEmpty() && !test.parameters.recurring">
+      <div class="panel panel-primary">
+          <div class="panel-heading">
+            <h3 class="panel-title"><i class="glyphicon glyphicon-ok"></i> Test Results: </h3>
+          </div>
+          <div class="panel-body">
+              <ul ng-repeat = "(key, value) in results">
+                  <li>{{key}} : {{value}}</li>
+              </ul>
+          </div>
+      </div>
+</div>
+
+<div class="col-xs-12" ng-if="!results || results.length == 0">
+    <div class="alert alert-warning">Retrieving results, please wait</div>
+</div>

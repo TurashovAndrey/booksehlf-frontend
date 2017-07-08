@@ -1,0 +1,97 @@
+<div class="panel-body container col-md-12">
+    <h4>Tenant Details</h4>
+    <div class="form-group row col-lg-12">
+        <label ng-if="!tenant.logo">Logo:</label>
+        <img ng-src="{{tenant.logo}}" class="img-circle" ng-if="tenant.logo">
+        <div class="form-group margin-5" ng-if="!view_mode">
+            <input type="file" ng-model="tenant.logo_info" base-sixty-four-input>
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-lg-6">
+            <div class="form-group margin-5" >
+                <label for="name-input">
+                    Name*
+                </label>
+                <input class="form-control" id="name-input" placeholder="Enter name" ng-model="tenant.name" ng-disabled="view_mode" required>
+            </div>
+            <div class="form-group margin-5">
+                <label for="description-input">
+                    Description
+                </label>
+                <input class="form-control" id="description-input" placeholder="Enter description" ng-model="tenant.description" ng-disabled="view_mode">
+            </div>
+            <div class="form-group margin-5">
+                <label>
+                    Contact
+                </label>
+                <select ng-model="tenant.contact" class="form-control" placeholder="Choose contact" ng-disabled="view_mode">
+                    <option value="">--Select contact--</option>
+                        <option ng-repeat="contact in contacts" value="{{contact.id}}" ng-selected="contact.id == tenant.contact">{{contact.name}}</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="form-group margin-5">
+                <label for="department-input">
+                    Department
+                </label>
+                <input class="form-control" id="department-input" placeholder="Enter department" ng-model="tenant.department" ng-disabled="view_mode">
+            </div>
+            <div class="form-group margin-5">
+                <label for="url-input">
+                    URL
+                </label>
+                <input class="form-control" id="url-input" placeholder="Enter url" ng-model="tenant.url" ng-disabled="view_mode">
+            </div>
+        </div>
+    </div>
+    <h4>Address Information</h4>
+    <div class="form-group row">
+        <div class="col-lg-6">
+            <div class="form-group margin-5">
+                <label for="address1-input">
+                    Address Line 1
+                </label>
+                <input class="form-control" id="address1-input" placeholder="Enter address 1" ng-model="tenant.address_line1" ng-disabled="view_mode">
+            </div>
+            <div class="form-group margin-5">
+                <label for="postalcode-input">
+                    Postal Code
+                </label>
+                    <input class="form-control" id="postalcode-input" placeholder="Enter postal code" ng-model="tenant.postalcode" ng-disabled="view_mode">
+            </div>
+            <div class="form-group margin-5">
+                <label>
+                    Country
+                </label>
+                    <select ng-model="tenant.country" class="form-control" placeholder="Choose country" ng-disabled="view_mode">
+                        <option class="form-control" value="">--Select country--</option>
+                        <option class="form-control" ng-repeat="(code, country) in countries" value="{{code}}">{{country}}</option>
+                    </select>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="form-group margin-5">
+                <label for="address2-input">
+                    Address Line 2
+                </label>
+                    <input class="form-control" id="address2-input" placeholder="Enter address 2" ng-model="tenant.address_line2" ng-disabled="view_mode">
+            </div>
+            <div class="form-group margin-5">
+                <label for="city-input">
+                    City
+                </label>
+                <input class="form-control" id="city-input" placeholder="Enter city" ng-model="tenant.city"  ng-disabled="view_mode">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <a class="btn btn-primary" ng-click="createTenant()" ng-if="!view_mode && !tenant.id">Create</a>
+        <a class="btn btn-primary" ng-click="editTenant(tenant.id)" ng-if="view_mode && tenant.id">Edit</a>
+        <a class="btn btn-primary" ng-click="updateTenant()" ng-if="!view_mode && tenant.id">Update</a>
+        <a class="btn btn-primary" ng-click="clearTenant()" ng-if="!view_mode && tenant.id">Reset</a>
+        <a class="btn btn-primary" ng-click="cancelTenant()">Back</a>
+    </div>
+</div>
+

@@ -1,0 +1,87 @@
+<div class="row">
+	<div class="col-xs-12">
+		<h4 ng-if="recurring">List of results of recurring tests</h4>   
+	    <h4 ng-if="!recurring">List of results of diagnostic tests</h4>
+        <div class="row">
+		    <div class="col-xs-3">
+			</div>
+			<div class="col-xs-9">
+				<div class="pull-right">
+					<ul uib-pagination total-items="total" ng-model="currentPage" ng-change="getTests()"></ul>				
+				</div>	
+			</div>
+		</div>
+	</div>	
+	
+	<div class="col-xs-12">
+		<table class="table table-tests">
+			<thead>
+				<tr>
+					<th><input type="checkbox" ng-click="checkAllTests()"></th>
+					<th>ID
+						<span ng-if="sortField!='id' && sortField!='-id'" ng-click="sort('id')" class="fa fa-sort"></span>
+						<span ng-if="sortField=='id'" ng-click="sort('-id')" class="fa fa-caret-down"></span>
+						<span ng-if="sortField=='-id'" ng-click="sort('id')" class="fa fa-caret-up"></span>
+					</th>
+					<th>Field Unit
+						<span ng-if="sortField!='field_unit' && sortField!='-field_unit'" ng-click="sort('field_unit')" class="fa fa-sort"></span>
+						<span ng-if="sortField=='field_unit'" ng-click="sort('-field_unit')" class="fa fa-caret-down"></span>
+						<span ng-if="sortField=='-field_unit'" ng-click="sort('field_unit')" class="fa fa-caret-up"></span>
+					</th>
+					<th>Target
+						<span ng-if="sortField!='target' && sortField!='-target'" ng-click="sort('target')" class="fa fa-sort"></span>
+						<span ng-if="sortField=='target'" ng-click="sort('-target')" class="fa fa-caret-down"></span>
+						<span ng-if="sortField=='-target'" ng-click="sort('target')" class="fa fa-caret-up"></span>
+					</th>
+					<th>Instrument
+						<span ng-if="sortField!='sensor' && sortField!='-sensor'" ng-click="sort('sensor')" class="fa fa-sort"></span>
+						<span ng-if="sortField=='sensor'" ng-click="sort('-sensor')" class="fa fa-caret-down"></span>
+						<span ng-if="sortField=='-sensor'" ng-click="sort('sensor')" class="fa fa-caret-up"></span>
+					</th>
+					<th>Start Date</th>
+					<th ng-if="recurring">End Date</th>
+					<th ng-if="recurring">Interval</th>
+					<th ng-if="recurring">Status</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody ng-repeat="test in tests">
+				<tr>
+					<td><input type="checkbox" ng-model="test.checked" ng-click="checkTest(test)"></td>
+					<td ng-click="getResults(test)">{{ test.id }}</td>
+					<td ng-if="test.field_unit_info.friendly_name" ng-click="getResults(test)">{{ test.field_unit_info.friendly_name }}</td>
+					<td ng-if="!test.field_unit_info.friendly_name" ng-click="getResults(test)">{{ test.field_unit_info.hostname }}</td>
+					<td ng-click="getResults(test)">{{ test.target_info.friendly_name }}</td>
+					<td ng-click="getResults(test)">{{ test.sensor_info.friendly_name }}</td>
+					<td ng-if="recurring" ng-click="getResults(test)">{{ test.parameters.start }}</td>
+					<td ng-if="recurring" ng-click="getResults(test)">{{ test.parameters.stop }}</td>
+					<td ng-if="recurring" ng-click="getResults(test)">{{ test.parameters.interval }}</td>
+					<td ng-if="!recurring" ng-click="getResults(test)">{{ test.created_date | date: 'medium' }}</td>
+					<td ng-if="test.status == 'Active' && recurring" ng-click="getResults(test)"><div class="fa fa-circle" style="color: green"></div></td>
+					<td ng-if="test.status == 'Pending' && recurring" ng-click="getResults(test)"><div class="fa fa-circle" style="color: yellow"></div></td>
+					<td ng-if="test.status == 'Finished' && recurring" ng-click="getResults(test)"><div class="fa fa-circle" style="color: red"></div></td>
+					<td>
+						<a class="btn btn-xs btn1-default" title="Remove" ng-click="delete(test.id)">
+							<i class="fa fa-trash"></i>
+						</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-xs-12">
+		<div class="pull-left">
+			<a class="btn btn-primary" ng-click="addTest()">Add</a>
+		</div>
+		<div class="pull-right" ng-show="checkedTests > 0">
+			<a class="btn btn-primary" ng-click="deleteTests()">Delete</a>
+		</div>
+	</div>
+</div>
+
+
+
+

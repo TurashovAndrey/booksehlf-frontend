@@ -1,0 +1,54 @@
+<div class="panel-body container col-md-12">
+    <h4>Roster Details</h4>
+    <div class="message">
+        <span class="error" ng-show="error">{{ error }}</span>
+    </div>
+    <div class="form-group row">
+        <div class="col-lg-6">
+            <div class="form-group margin-5" >
+                <label>
+                    Test*
+                </label>
+                <select ng-model="roster.test" class="form-control" placeholder="Choose test" ng-disabled="view_mode"
+                        ng-options="test.name as test.id for test in tests">
+                </select>
+            </div>
+            <div class="form-group margin-5">
+                <label for="schedule-start">
+                    Schedule Start*
+                </label>
+                <div class="input-group">
+                    <input datetime-picker date-format="yyyy-MM-dd HH:mm:ss" class="form-control" id="schedule-start" placeholder="Enter Schedule Start" ng-model="roster.schedule_start" ng-disabled="view_mode">
+                </div>
+            </div>
+            <div class="form-group margin-5">
+                <label for="schedule-end">
+                    Schedule End*
+                </label>
+                <div class="input-group">
+                    <input datetime-picker date-format="yyyy-MM-dd HH:mm:ss" class="form-control"  id="schedule-end" placeholder="Enter Schedule End" ng-model="roster.schedule_end" ng-disabled="view_mode">
+                </div>
+            </div>
+            <div class="form-group margin-5">
+                <label for="interval">
+                    Interval*
+                </label>
+                <input class="form-control" id="interval" placeholder="Enter Interval" ng-model="roster.interval" ng-disabled="view_mode">
+            </div>
+            <div class="form-group margin-5">
+                <label for="sensor-data-id">
+                    Instrument Data ID
+                </label>
+                <input class="form-control" id="sensor-data-id" placeholder="Enter Instrument Data ID" ng-model="roster.sensor_data_id" ng-disabled="view_mode">
+            </div>
+        </div>
+    </div>
+    <div>
+        <a class="btn btn-primary" ng-click="createRoster()" ng-if="!view_mode && !roster.id">Create</a>
+        <a class="btn btn-primary" ng-click="editRoster(roster.id)" ng-if="view_mode && roster.id">Edit</a>
+        <a class="btn btn-primary" ng-click="updateRoster()" ng-if="!view_mode && roster.id">Update</a>
+        <a class="btn btn-primary" ng-click="clearRoster()" ng-if="!view_mode && roster.id">Reset</a>
+        <a class="btn btn-primary" ng-click="cancelRoster()">Back</a>
+    </div>
+</div>
+

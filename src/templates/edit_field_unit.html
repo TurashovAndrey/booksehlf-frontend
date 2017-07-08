@@ -1,0 +1,88 @@
+<div class="panel-body container col-xs-12" >
+    <h4>Field Unit Details</h4>
+    <div class="message">
+        <span class="error" ng-show="error">{{ error }}</span>
+    </div>
+    <div class="form-group row">
+        <div class="col-xs-6">
+            <div class="form-group">
+                <label for="name-input">
+                    Host Name*
+                </label>
+                <input class="form-control" id="name-input" placeholder="Enter host name" ng-model="fieldUnit.hostname" ng-disabled="view_mode" required>
+            </div>
+            <div class="form-group">
+                <label>
+                    Friendly Name
+                </label>
+                <input class="form-control" id="name-input" placeholder="Enter friendly name" ng-model="fieldUnit.friendly_name" ng-disabled="view_mode">
+            </div>
+            <div class="form-group">
+                <label>
+                    Instrument Data ID
+                </label>    
+                <input class="form-control" id="name-input" placeholder="Instrument Data ID" ng-model="fieldUnit.sensor_data_id" ng-disabled="view_mode">
+            </div>
+            <div class="form-group">
+                <label>
+                    Company*
+                </label>
+                <select ng-model="fieldUnit.company" class="form-control" placeholder="Choose company" ng-disabled="view_mode"
+                        ng-options="company.id as company.name for company in companies">
+                </select>
+            </div>
+            <div class="form-group">
+                <label>
+                    Ledmaster version
+                </label>
+                <input class="form-control" id="name-input" placeholder="Ledmaster version" ng-model="fieldUnit.field_unit_updater_info.ledmaster_version" ng-disabled="view_mode">
+            </div>
+            <div class="form-group">
+                <label>
+                    Scheduler version
+                </label>
+                <input class="form-control" id="name-input" placeholder="Scheduler version" ng-model="fieldUnit.field_unit_updater_info.scheduler_version" ng-disabled="view_mode">
+            </div>
+        </div>
+        <div class="col-xs-6">
+            <div class="form-group">
+                <label>
+                    IP Address
+                </label>
+                <input class="form-control" id="description-input" placeholder="Enter IP Address" ng-model="fieldUnit.GlobalIPV4" ng-disabled="view_mode">
+            </div>
+            <div class="form-group">
+                <label>
+                    MAC Address
+                </label>
+                <input class="form-control" id="description-input" placeholder="Enter MAC Address" ng-model="fieldUnit.MAC_address" ng-disabled="view_mode">
+            </div>
+            <div class="form-group">
+                <label>
+                    Heartbeat interval
+                </label>
+                <input class="form-control" id="description-input" placeholder="Enter heartbeat interval(sec)" ng-model="fieldUnit.heartbeat_interval" ng-disabled="view_mode">
+            </div>
+            <div class="form-group">
+                <label>
+                    Ledmaster server version
+                </label>
+                <input class="form-control" id="name-input" placeholder="Ledmaster version" ng-model="fieldUnit.field_unit_updater_info.ledmaster_version_current" ng-disabled="view_mode">
+            </div>
+            <div class="form-group">
+                <label>
+                    Scheduler server version
+                </label>
+                <input class="form-control" id="name-input" placeholder="Scheduler version" ng-model="fieldUnit.field_unit_updater_info.scheduler_version_current" ng-disabled="view_mode">
+            </div>
+
+        </div>
+    </div>
+    <div>
+        <a class="btn btn-primary" ng-click="createFieldUnit()" ng-if="!view_mode && !fieldUnit.id">Create</a>
+        <a class="btn btn-primary" ng-click="editFieldUnit(fieldUnit.id)" ng-if="view_mode && fieldUnit.id">Edit</a>
+        <a class="btn btn-primary" ng-click="updateFieldUnit()" ng-if="!view_mode && fieldUnit.id">Update</a>
+        <a class="btn btn-primary" ng-click="clearFieldUnit()" ng-if="!view_mode && fieldUnit.id">Reset</a>
+        <a class="btn btn-primary" ng-click="cancelFieldUnit()">Back</a>
+    </div>
+</div>

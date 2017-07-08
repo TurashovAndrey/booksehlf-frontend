@@ -1,0 +1,37 @@
+<div class="panel-body container col-md-12">
+    <h4>Target Details</h4>
+    <div class="message">
+        <span class="error" ng-show="error">{{ error }}</span>
+    </div>
+    <div class="form-group row">
+        <div class="col-lg-6">
+            <div class="form-group margin-5" >
+                <label for="name-input">
+                    Friendly Name*
+                </label>
+                <input class="form-control" id="name-input" placeholder="Enter friendly name" ng-model="target.friendly_name" ng-disabled="view_mode" required>
+            </div>
+            <div class="form-group margin-5">
+                <label for="department-input">
+                    IP Address
+                </label>
+                <input class="form-control" id="department-input" placeholder="Enter IP Address" ng-model="target.IPv4" ng-disabled="view_mode">
+            </div>
+            <div class="form-group margin-5">
+                <label>
+                    Site*
+                </label>
+                <select ng-model="target.site" class="form-control" placeholder="Choose site" ng-disabled="view_mode" ng-options="site.id as site.name for site in sites">
+                </select>
+            </div>
+        </div>
+    </div>
+    <div>
+        <a class="btn btn-primary" ng-click="createTarget()" ng-if="!view_mode && !target.id">Create</a>
+        <a class="btn btn-primary" ng-click="editTarget(target.id)" ng-if="view_mode && target.id">Edit</a>
+        <a class="btn btn-primary" ng-click="updateTarget()" ng-if="!view_mode && target.id">Update</a>
+        <a class="btn btn-primary" ng-click="clearTarget()" ng-if="!view_mode && target.id">Reset</a>
+        <a class="btn btn-primary" ng-click="cancelTarget()">Back</a>
+    </div>
+</div>
+

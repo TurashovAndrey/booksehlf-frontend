@@ -1,0 +1,63 @@
+<div class="row">
+	<div class="col-xs-12">
+	    <h4>Target List</h4>
+	    <div class="row">
+			<div class="col-xs-3">
+			  <div class="input-group">	
+				  <input type="text" class="form-control" placeholder="Target" aria-describedby="basic-addon2" ng-model="searchField">
+				  <a class="btn input-group-addon" id="basic-addon2" ng-click="search()">Search</a>
+			  </div>	
+			</div>
+			<div class="col-xs-9">
+				<div class="pull-right">
+					<ul uib-pagination total-items="total" ng-model="currentPage" ng-change="getTargets()"></ul>				
+				</div>	
+			</div>
+		</div>
+		<table class="table">
+			<thead>
+				<tr>
+					<th>Friendly Name
+						<span ng-if="sortField!='friendly_name' && sortField!='-friendly_name'" ng-click="sort('friendly_name')" class="fa fa-sort"></span>
+						<span ng-if="sortField=='friendly_name'" ng-click="sort('-friendly_name')" class="fa fa-caret-down"></span>
+						<span ng-if="sortField=='-friendly_name'" ng-click="sort('friendly_name')" class="fa fa-caret-up"></span>
+					</th>
+					<th>IP Address
+						<span ng-if="sortField!='IPv4' && sortField!='-IPv4'" ng-click="sort('IPv4')" class="fa fa-sort"></span>
+						<span ng-if="sortField=='IPv4'" ng-click="sort('-IPv4')" class="fa fa-caret-down"></span>
+						<span ng-if="sortField=='-IPv4'" ng-click="sort('IPv4')" class="fa fa-caret-up"></span>
+					</th>
+					<th>Site
+						<span ng-if="sortField!='site' && sortField!='-site'" ng-click="sort('site')" class="fa fa-sort"></span>
+						<span ng-if="sortField=='site'" ng-click="sort('-site')" class="fa fa-caret-down"></span>
+						<span ng-if="sortField=='-site'" ng-click="sort('site')" class="fa fa-caret-up"></span>
+					</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody ng-repeat="target in targets">
+				<tr>
+					<td><a ng-click="view(target.id)" class="table-link">{{ target.friendly_name }}</a></td>
+					<td>{{ target.IPv4 }}</td>
+					<td>{{ target.site_info.name }}</td>
+					<td>
+						<a class="btn btn-xs btn-default" title="Edit" ng-click="edit(target.id)">
+							<i class="fa fa-pencil"></i>
+						</a>
+						<a class="btn btn-xs btn1-default" title="Remove" ng-click="delete(target.id)">
+							<i class="fa fa-trash"></i>
+						</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-xs-12">
+		<a class="btn btn-primary" ng-click="addTarget()">Add</a>
+	</div>
+</div>
+
+

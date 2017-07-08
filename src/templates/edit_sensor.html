@@ -1,0 +1,128 @@
+<div class="panel-body container col-md-12">
+    <h4>Instrument Details</h4>
+    <div class="message">
+        <span class="error" ng-show="error">{{ error }}</span>
+    </div>
+    <div class="form-group row col-lg-12" ng-if="false">
+        <img ng-src="{{sensor.icon}}" class="img-circle" ng-if="sensor.icon">
+        <div class="form-group margin-5" ng-if="!view_mode">
+            <input type="file" ng-model="sensor.icon_info" base-sixty-four-input>
+        </div>
+    </div>
+
+    <div class="form-group row col-lg-12" >
+        <label>Load Configuration:</label>
+        <div class="form-group margin-5">
+            <input type="file" fileread="sensor.configString" />
+        </div>
+        <a class="btn btn-primary margin-5" ng-click="loadConfig()">Load</a>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-lg-6">
+
+            <div class="form-group margin-5">
+                <label for="name-input">
+                    Name*
+                </label>
+                <span class="form-control" id="name-input" placeholder="Enter name" >{{ sensor.friendly_name }}</span>
+            </div>
+
+            <div class="form-group margin-5">
+                <label for="type-input">
+                    Type*
+                </label>
+                <span class="form-control" id="type-input" placeholder="Enter type" >{{ sensor.task_type }}</span>
+            </div>
+
+            <div class="form-group margin-5">
+                <label for="version-input">
+                    Version
+                </label>
+                <span class="form-control" id="version-input" placeholder="Enter version" >{{ sensor.version }}</span>
+            </div>
+
+            <div class="form-group margin-5">
+                <label for="date-input">
+                    Date
+                </label>
+                <span class="form-control" id="date-input" placeholder="Date" >{{ sensor.date | date: "yyyy-MM-dd HH:mm:ss" }}</span>
+            </div>
+
+
+            <div class="form-group margin-5">
+                <label for="description-input">
+                    Description
+                </label>
+                <textarea class="form-control" style="height:100px" id="description-input" placeholder="Enter description" ng-model="sensor.description" ng-disabled="true">
+            </div>
+
+            <div class="form-group margin-5">
+	            <div ng-if="sensor.target_mandatory == true">
+	            	<i class="fa fa-check" aria-hidden="true">Target Mandatory</i>
+	            </div>
+	            <div ng-if="sensor.target_mandatory != true">
+	            	<i class="fa fa-times" aria-hidden="true">Target Mandatory</i>
+	            </div>
+			</div>
+
+            <div class="form-group margin-5">
+	            <div ng-if="sensor.save_required == true">
+	            	<i class="fa fa-check" aria-hidden="true">Save Required</i>
+	            </div>
+	            <div ng-if="sensor.save_required != true">
+	            	<i class="fa fa-times" aria-hidden="true">Save Required</i>
+	            </div>
+			</div>
+
+            <div class="form-group margin-5">
+	            <div ng-if="sensor.parameters.capabilities.recurring == true || sensor.parameters.capabilities.load == true">
+	            	<i class="fa fa-check" aria-hidden="true">Recurring</i>
+	            </div>
+	            <div ng-if="sensor.parameters.capabilities.recurring != true && sensor.parameters.capabilities.load != true">
+	            	<i class="fa fa-times" aria-hidden="true">Recurring</i>
+	            </div>
+	            <div ng-if="sensor.parameters.capabilities.single == true || sensor.parameters.capabilities.load == true">
+	            	<i class="fa fa-check" aria-hidden="true">Single</i>
+	            </div>
+	            <div ng-if="sensor.parameters.capabilities.single != true && sensor.parameters.capabilities.load != true">
+	            	<i class="fa fa-times" aria-hidden="true">Single</i>
+	            </div>
+	            <div ng-if="sensor.parameters.capabilities.load_testing == true">
+	            	<i class="fa fa-check" aria-hidden="true">Load Testing</i>
+	            </div>
+	            <div ng-if="sensor.parameters.capabilities.load_testing != true">
+	            	<i class="fa fa-times" aria-hidden="true">Load testing</i>
+	            </div>
+            </div>
+
+
+            <h4>Parameters:</h4>
+            <rd-widget>
+                <rd-widget-body classes="medium no-padding">
+                    <td class="table-responsive">
+                        <table class="table">
+                                    <th>Parameter</th>
+                                    <th>Value</th>
+                                </tr>
+                            </thead>
+                            <tbody ng-repeat="(name, value) in sensor.parameters track by $index">
+                                <tr >
+                                    <td>{{ name }}</td>
+                                    <td>{{ value }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </rd-widget-body>
+            <rd-widget>
+        </div>
+        <div>
+            <a class="btn btn-primary" ng-click="createSensor()" ng-if="!view_mode && !sensor.id">Create</a>
+            <a class="btn btn-primary" ng-click="editSensor(sensor.id)" ng-if="view_mode && sensor.id">Edit</a>
+            <a class="btn btn-primary" ng-click="updateSensor()" ng-if="!view_mode && sensor.id">Update</a>
+            <a class="btn btn-primary" ng-click="clearSensor()" ng-if="!view_mode && sensor.id">Reset</a>
+            <a class="btn btn-primary" ng-click="cancelSensor()">Back</a>
+        </div>
+    </div>
+</div>

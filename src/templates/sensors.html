@@ -1,0 +1,44 @@
+<div class="row">
+	<div class="col-xs-12">
+		<h4>Instruments</h4>
+	    <div class="row">
+			<div class="col-xs-3">
+			  <div class="input-group">	
+				  <input type="text" class="form-control" placeholder="Instrument" aria-describedby="basic-addon2" ng-model="searchField">
+				  <a class="btn input-group-addon" id="basic-addon2" ng-click="search()">Search</a>
+			  </div>	
+			</div>
+			<div class="col-xs-9">
+				<div class="pull-right">
+					<ul uib-pagination total-items="total" ng-model="currentPage" ng-change="getSensors()"></ul>				
+				</div>	
+			</div>
+		</div>
+		<table class="table">
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody ng-repeat="sensor in sensors">
+				<tr>
+					<td><a ng-click="view(sensor.id)" class="table-link">{{ sensor.friendly_name }}</a></td>
+					<td>
+						<a class="btn btn-xs btn1-default" title="Remove" ng-click="delete(sensor.id)">
+							<i class="fa fa-trash"></i>
+						</a>
+					</td>
+
+				</tr>
+
+			</tbody>
+		</table>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-xs-12">
+		<a class="btn btn-primary" ng-click="addSensor()">Add</a>
+	</div>
+</div>

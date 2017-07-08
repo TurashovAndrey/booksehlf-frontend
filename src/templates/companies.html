@@ -1,0 +1,97 @@
+<div class="row">
+	<div class="col-xs-12">
+	    <h4>Company List</h4>
+	    <div class="row">
+			<div class="col-xs-3">
+			  <div class="input-group">	
+				  <input type="text" class="form-control" placeholder="Company" aria-describedby="basic-addon2" ng-model="searchField">
+				  <a class="btn input-group-addon" id="basic-addon2" ng-click="search()">Search</a>
+			  </div>	
+			</div>
+			<div class="col-xs-9">
+				<div class="pull-right">
+					<ul uib-pagination total-items="total" ng-model="currentPage" ng-change="getTenants()"></ul>				
+				</div>	
+			</div>
+		</div>
+		<table class="table">
+			<thead>
+				<tr>
+					<th>Company
+						<span ng-if="sortField!='name' && sortField!='-name'" ng-click="sort('name')" class="fa fa-sort"></span>
+						<span ng-if="sortField=='name'" ng-click="sort('-name')" class="fa fa-caret-down"></span>
+						<span ng-if="sortField=='-name'" ng-click="sort('name')" class="fa fa-caret-up"></span>
+					</th>
+					<th>Department
+						<span ng-if="sortField!='department' && sortField!='-department'" ng-click="sort('department')" class="fa fa-sort"></span>
+						<span ng-if="sortField=='department'" ng-click="sort('-department')" class="fa fa-caret-down"></span>
+						<span ng-if="sortField=='-department'" ng-click="sort('department')" class="fa fa-caret-up"></span>
+					</th>
+					<th>URL
+						<span ng-if="sortField!='url' && sortField!='-url'" ng-click="sort('url')" class="fa fa-sort"></span>
+						<span ng-if="sortField=='url'" ng-click="sort('-url')" class="fa fa-caret-down"></span>
+						<span ng-if="sortField=='-url'" ng-click="sort('url')" class="fa fa-caret-up"></span>
+					</th>
+					<th>Address line 1
+						<span ng-if="sortField!='address_line1' && sortField!='-address_line1'" ng-click="sort('address_line1')" class="fa fa-sort"></span>
+						<span ng-if="sortField=='address_line1'" ng-click="sort('-address_line1')" class="fa fa-caret-down"></span>
+						<span ng-if="sortField=='-address_line1'" ng-click="sort('address_line1')" class="fa fa-caret-up"></span>
+					</th>
+					<th>Address line 2
+						<span ng-if="sortField!='address_line2' && sortField!='-address_line2'" ng-click="sort('address_line2')" class="fa fa-sort"></span>
+						<span ng-if="sortField=='address_line2'" ng-click="sort('-address_line2')" class="fa fa-caret-down"></span>
+						<span ng-if="sortField=='-address_line2'" ng-click="sort('address_line2')" class="fa fa-caret-up"></span>
+					</th>
+					<th>City
+						<span ng-if="sortField!='city' && sortField!='-city'" ng-click="sort('city')" class="fa fa-sort"></span>
+						<span ng-if="sortField=='city'" ng-click="sort('-city')" class="fa fa-caret-down"></span>
+						<span ng-if="sortField=='-city'" ng-click="sort('city')" class="fa fa-caret-up"></span>
+					</th>
+					<th>Country
+						<span ng-if="sortField!='country' && sortField!='-country'" ng-click="sort('country')" class="fa fa-sort"></span>
+						<span ng-if="sortField=='country'" ng-click="sort('-country')" class="fa fa-caret-down"></span>
+						<span ng-if="sortField=='-country'" ng-click="sort('country')" class="fa fa-caret-up"></span>
+					</th>
+					<th>Postal Code
+						<span ng-if="sortField!='postal_code' && sortField!='-portal_code'" ng-click="sort('postal_code')" class="fa fa-sort"></span>
+						<span ng-if="sortField=='postal_code'" ng-click="sort('-postal_code')" class="fa fa-caret-down"></span>
+						<span ng-if="sortField=='-postal_code'" ng-click="sort('postal_code')" class="fa fa-caret-up"></span>
+					</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody ng-repeat="company in companies">
+				<tr>
+					<td><a ng-click="view(company.id)" class="table-link">{{ company.name }}</a></td>
+					<td>{{ company.department }}</td>
+					<td>{{ company.url }}</td>
+					<td>{{ company.address_line1 }}</td>
+					<td>{{ company.address_line2 }}</td>
+					<td>{{ company.city }}</td>
+					<td>{{ company.country }}</td>
+					<td>{{ company.postal_code }}</td>
+					<td>
+						<a class="btn btn-xs btn-default" title="Edit" ng-click="edit(company.id)">
+							<i class="fa fa-pencil"></i>
+						</a>
+						<a class="btn btn-xs btn-default" title="Remove" ng-click="delete(company.id)">
+							<i class="fa fa-trash"></i>
+						</a>
+						<a class="btn btn-xs btn-default" title="Users" ng-if="user.is_superuser" ui-sref="company_users({id: company.id})">
+							<i class="fa fa-users"></i>
+						</a>
+						
+					</td>
+
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-xs-12">
+		<a class="btn btn-primary" ng-click="addCompany()">Add</a>
+	</div>
+</div>
+

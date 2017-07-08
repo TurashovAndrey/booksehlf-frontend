@@ -1,0 +1,99 @@
+<div class="row">
+	<div class="col-xs-12">
+	    <h4>Field Unit List</h4>
+	    <div class="row">
+			<div class="col-xs-3">
+			  <div class="input-group">	
+				  <input type="text" class="form-control" placeholder="FieldUnit" aria-describedby="basic-addon2" ng-model="searchField">
+				  <a class="btn input-group-addon" id="basic-addon2" ng-click="search()">Search</a>
+			  </div>	
+			</div>
+			<div class="col-xs-9">
+				<div class="pull-right">
+					<ul uib-pagination total-items="total" ng-model="currentPage" ng-change="getFieldUnits()"></ul>				
+				</div>	
+			</div>
+		</div>
+
+		<table class="table">
+			<thead>
+				<tr>
+					<th>Host Name
+						<span ng-if="sortField!='hostname' && sortField!='-hostname'" ng-click="sort('hostname')" class="fa fa-sort"></span>
+						<span ng-if="sortField=='hostname'" ng-click="sort('-hostname')" class="fa fa-caret-down"></span>
+						<span ng-if="sortField=='-hostname'" ng-click="sort('hostname')" class="fa fa-caret-up"></span>
+					</th>
+					<th>Friendly Name
+						<span ng-if="sortField!='friendly_name' && sortField!='-friendly_name'" ng-click="sort('friendly_name')" class="fa fa-sort"></span>
+						<span ng-if="sortField=='friendly_name'" ng-click="sort('-friendly_name')" class="fa fa-caret-down"></span>
+						<span ng-if="sortField=='-friendly_name'" ng-click="sort('friendly_name')" class="fa fa-caret-up"></span>
+					</th>
+					<th>IP Address
+						<span ng-if="sortField!='GlobalIPV4' && sortField!='-GlobalIPV4'" ng-click="sort('GlobalIPV4')" class="fa fa-sort"></span>
+						<span ng-if="sortField=='GlobalIPV4'" ng-click="sort('-GlobalIPV4')" class="fa fa-caret-down"></span>
+						<span ng-if="sortField=='-GlobalIPV4'" ng-click="sort('GlobalIPV4')" class="fa fa-caret-up"></span>
+					</th>
+					<th>Date Installed
+						<span ng-if="sortField!='date_installed' && sortField!='-date_installed'" ng-click="sort('date_installed')" class="fa fa-sort"></span>
+						<span ng-if="sortField=='date_installed'" ng-click="sort('-date_installed')" class="fa fa-caret-down"></span>
+						<span ng-if="sortField=='-date_installed'" ng-click="sort('date_installed')" class="fa fa-caret-up"></span>
+					</th>
+					<th>MAC Address
+						<span ng-if="sortField!='MAC_address' && sortField!='-MAC_address'" ng-click="sort('MAC_address')" class="fa fa-sort"></span>
+						<span ng-if="sortField=='MAC_address'" ng-click="sort('-MAC_address')" class="fa fa-caret-down"></span>
+						<span ng-if="sortField=='-MAC_address'" ng-click="sort('MAC_address')" class="fa fa-caret-up"></span>
+					</th>
+					</th>
+					<th>Active
+						<span ng-if="sortField!='active' && sortField!='-active'" ng-click="sort('active')" class="fa fa-sort"></span>
+						<span ng-if="sortField=='active'" ng-click="sort('-active')" class="fa fa-caret-down"></span>
+						<span ng-if="sortField=='-active'" ng-click="sort('active')" class="fa fa-caret-up"></span>
+					</th>
+					<th>Last Active
+						<span ng-if="sortField!='last_active' && sortField!='-last_active'" ng-click="sort('last_active')" class="fa fa-sort"></span>
+						<span ng-if="sortField=='last_active'" ng-click="sort('-last_active')" class="fa fa-caret-down"></span>
+						<span ng-if="sortField=='-last_active'" ng-click="sort('last_active')" class="fa fa-caret-up"></span>
+					</th>
+					<th>Heartbeat Interval
+						<span ng-if="sortField!='heartbeat_interval' && sortField!='-heartbeat_interval'" ng-click="sort('heartbeat_interval')" class="fa fa-sort"></span>
+						<span ng-if="sortField=='heartbeat_interval'" ng-click="sort('-heartbeat_interval')" class="fa fa-caret-down"></span>
+						<span ng-if="sortField=='-heartbeat_interval'" ng-click="sort('heartbeat_interval')" class="fa fa-caret-up"></span>
+					</th>
+                    <th>Update</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody ng-repeat="fieldUnit in fieldUnits">
+				<tr>
+					<td><a ng-click="view(fieldUnit.id)" class="table-link">{{ fieldUnit.hostname }}</a></td>
+					<td>{{ fieldUnit.friendly_name }}</td>
+					<td>{{ fieldUnit.GlobalIPV4 }}</td>
+					<td>{{ fieldUnit.date_installed | date:'medium' }}</td>
+					<td>{{ fieldUnit.MAC_address }}</td>
+					<td ng-if="fieldUnit.active_state"><i class="fa fa-check" aria-hidden="true"></i></td>
+					<td ng-if="!fieldUnit.active_state"><i class="fa fa-times" aria-hidden="true"></i></td>
+                    <td>{{ fieldUnit.last_active | date:'medium' }}</td>
+                    <td>{{ fieldUnit.heartbeat_interval }}</td>
+                    <td><a ng-if="fieldUnit.field_unit_updater_info.ledmaster_version_old || fieldUnit.field_unit_updater_info.scheduler_version_old" class="btn btn-primary" ng-click="updateFieldUnitVersion(fieldUnit)">
+                        Update
+                    </a></td>
+                    <td>
+						<a class="btn btn-xs btn-default" title="Edit" ng-click="edit(fieldUnit.id)">
+							<i class="fa fa-pencil"></i>
+						</a>
+						<a class="btn btn-xs btn1-default" title="Remove" ng-click="delete(fieldUnit.id)">
+							<i class="fa fa-trash"></i>
+						</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-xs-12">
+		<a class="btn btn-primary" ng-click="addFieldUnit()">Add</a>
+	</div>
+</div>
+
